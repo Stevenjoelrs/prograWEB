@@ -5,177 +5,33 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tutorial Completo de Python Básico</title>
-    <style>
-        @media print {
-
-            header,
-            aside,
-            footer,
-            nav,
-            .container>aside,
-            hr {
-                display: none !important;
-            }
-
-            body {
-                background: white !important;
-                color: black !important;
-                font-size: 12pt;
-                line-height: 1.5;
-                margin: 0;
-                padding: 0;
-            }
-
-            .container {
-                display: block !important;
-                max-width: none !important;
-                padding: 0 !important;
-                margin: 0 !important;
-            }
-
-            main {
-                padding: 0 !important;
-                margin: 0 !important;
-                background: none !important;
-                box-shadow: none !important;
-                border-radius: 0 !important;
-            }
-
-            section {
-                margin-bottom: 1.5em !important;
-                page-break-inside: avoid;
-            }
-
-            h1,
-            h2,
-            h3 {
-                color: black !important;
-                page-break-after: avoid;
-            }
-
-            h1 {
-                font-size: 24pt;
-                margin-bottom: 0.5em;
-                border-bottom: 2px solid black;
-                padding-bottom: 0.3em;
-            }
-
-            h2 {
-                font-size: 18pt;
-                margin-top: 1.5em;
-                margin-bottom: 0.5em;
-                border-bottom: 1px solid #333;
-                padding-bottom: 0.2em;
-            }
-
-            h3 {
-                font-size: 14pt;
-                margin-top: 1.2em;
-                margin-bottom: 0.4em;
-            }
-
-            p {
-                margin-bottom: 1em;
-                text-align: justify;
-                orphans: 3;
-                widows: 3;
-            }
-
-            ul,
-            ol {
-                margin: 0.5em 0 1em 2em;
-            }
-
-            li {
-                margin-bottom: 0.3em;
-            }
-
-            code {
-                background: #f0f0f0 !important;
-                color: black !important;
-                padding: 0.1em 0.3em;
-                border-radius: 3px;
-                font-family: "Courier New", Courier, monospace;
-                font-size: 10pt;
-            }
-
-            pre {
-                background: #f5f5f5 !important;
-                color: black !important;
-                border: 1px solid #ccc !important;
-                padding: 1em;
-                margin: 1em 0;
-                border-radius: 4px;
-                overflow: visible;
-                page-break-inside: avoid;
-                font-size: 9.5pt;
-                line-height: 1.4;
-            }
-
-            pre code {
-                background: none !important;
-                padding: 0;
-                font-size: inherit;
-            }
-
-            a {
-                color: black !important;
-                text-decoration: none !important;
-            }
-
-            a[href^="http"]::after {
-                content: " (" attr(href) ")";
-                font-size: 9pt;
-                color: #666;
-            }
-
-            strong {
-                font-weight: bold;
-            }
-
-            .footer-bottom {
-                display: none !important;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="styles.css">
 </head>
 
 <body>
     <header>
-        <h1>Python Básico</h1>
-        <nav>
-            <ul>
-                <li><a href="#que-es-python">¿Qué es Python?</a></li>
-                <li><a href="#como-arrancar">Cómo arrancar</a></li>
-                <li><a href="#entornos">Entornos</a></li>
-                <li><a href="#tipos-datos">Tipos de datos</a></li>
-                <li><a href="#variables">Variables</a></li>
-                <li><a href="#condicionales">Condicionales</a></li>
-                <li><a href="#bucles">Bucles</a></li>
-                <li><a href="#funciones">Funciones</a></li>
-                <li><a href="#errores">Errores</a></li>
-                <li><a href="#librerias">Librerías</a></li>
-            </ul>
-        </nav>
+        <div class="header-content">
+            <h1>Python Básico</h1>
+        </div>
     </header>
 
     <div class="container">
         <aside>
             <h2>Índice</h2>
             <nav aria-label="Tabla de contenidos">
-                <ul>
+                <ul class="toc">
                     <li><a href="#que-es-python">1. ¿Qué es Python?</a></li>
                     <li><a href="#como-arrancar">2. ¿Cómo arrancar Python?</a></li>
                     <li><a href="#entornos">3. Entornos de Desarrollo</a></li>
                     <li><a href="#tipos-datos">4. Tipos de Datos Principales</a></li>
                     <li><a href="#variables">5. Variables Dinámicas</a></li>
                     <li><a href="#condicionales">6. Estructuras de Control</a>
-                        <ul>
+                        <ul class="sub-item">
                             <li><a href="#condicionales">6.1 Condicionales (if/elif/else)</a></li>
                         </ul>
                     </li>
                     <li><a href="#bucles">7. Bucles (Ciclos)</a>
-                        <ul>
+                        <ul class="sub-item">
                             <li><a href="#bucle-for">7.1 Bucle For</a></li>
                             <li><a href="#bucle-while">7.2 Bucle While</a></li>
                         </ul>
@@ -223,16 +79,21 @@
                 <p>Python cuenta con diferentes tipos de datos incorporados listos para usar:</p>
                 <ul>
                     <li><strong>Enteros y Flotantes (int, float):</strong> <code>edad = 25</code>,
-                        <code>precio = 19.99</code></li>
+                        <code>precio = 19.99</code>
+                    </li>
                     <li><strong>Cadenas de texto (str):</strong> <code>nombre = "Steven"</code></li>
                     <li><strong>Booleanos (bool):</strong> <code>es_mayor = True</code>,
-                        <code>tiene_descuento = False</code></li>
+                        <code>tiene_descuento = False</code>
+                    </li>
                     <li><strong>Listas (list):</strong> Colecciones ordenadas y modificables.
-                        <code>frutas = ["manzana", "pera", "uva"]</code></li>
+                        <code>frutas = ["manzana", "pera", "uva"]</code>
+                    </li>
                     <li><strong>Tuplas (tuple):</strong> Colecciones ordenadas pero inmutables (no se pueden cambiar).
-                        <code>coordenadas = (10.5, 20.3)</code></li>
+                        <code>coordenadas = (10.5, 20.3)</code>
+                    </li>
                     <li><strong>Diccionarios (dict):</strong> Colecciones de pares clave-valor.
-                        <code>usuario = {"nombre": "Steven", "rol": "admin"}</code></li>
+                        <code>usuario = {"nombre": "Steven", "rol": "admin"}</code>
+                    </li>
                 </ul>
             </section>
 
@@ -295,7 +156,8 @@ while contador < 3:
             <section id="funciones">
                 <h2>Funciones</h2>
                 <p>Las funciones agrupan código para que pueda ser reutilizado. Se definen con la palabra reservada
-                    <code>def</code>.</p>
+                    <code>def</code>.
+                </p>
                 <pre><code>
 def sumar(a, b):
     resultado = a + b
@@ -360,6 +222,8 @@ print(datetime.now()) # Uso directo sin poner el módulo antes
             </div>
         </div>
     </footer>
+
+
 </body>
 
 </html>

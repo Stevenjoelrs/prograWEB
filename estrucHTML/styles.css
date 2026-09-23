@@ -1,0 +1,537 @@
+/* ============================
+   Reset y base (Mobile First - Portrait)
+   Todo apilado en una sola columna
+   ============================ */
+html {
+    scroll-behavior: smooth;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+    line-height: 1.6;
+    color: #333;
+    background-color: #fafafa;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    min-height: 100vh;
+    font-size: 0.95rem;
+    overflow-x: hidden;
+    width: 100%;
+}
+
+/* ============================
+   Header (solo título)
+   ============================ */
+header {
+    background: #2c3e50;
+    color: white;
+    padding: 0.75rem 1rem;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+header h1 {
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.header-content {
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+/* ============================
+   Contenedor principal
+   Mobile: una sola columna, apilado
+   ============================ */
+.container {
+    max-width: 1200px;
+    width: 100%;
+    margin: 0 auto;
+    padding: 1rem;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+}
+
+/* ============================
+   Main (contenido)
+   ============================ */
+main {
+    background: white;
+    padding: 1.25rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    order: 2;
+    min-width: 0;
+    overflow-x: hidden;
+}
+
+/* ============================
+   Aside (índice / sidebar)
+   Mobile: arriba del main, no sticky
+   ============================ */
+aside {
+    background: white;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    height: fit-content;
+    order: 1;
+}
+
+aside h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #3498db;
+    color: #2c3e50;
+}
+
+/* ============================
+   Tabla de contenidos (TOC)
+   ============================ */
+.toc {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc li {
+    margin: 0.4rem 0;
+}
+
+.toc a {
+    color: #2c3e50;
+    text-decoration: none;
+    font-size: 0.9rem;
+    display: block;
+    padding: 0.25rem 0;
+    transition: color 0.2s, padding-left 0.2s;
+}
+
+.toc a:hover {
+    color: #3498db;
+    padding-left: 0.5rem;
+}
+
+.toc .sub-item {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.toc .sub-item a {
+    font-size: 0.85rem;
+    color: #555;
+    padding-left: 1rem;
+}
+
+.toc .sub-item a:hover {
+    color: #3498db;
+}
+
+/* ============================
+   Footer
+   ============================ */
+footer {
+    background: #2c3e50;
+    color: white;
+    padding: 1.5rem 1rem;
+    margin-top: auto;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
+    text-align: center;
+}
+
+.footer-section h3 {
+    font-size: 1rem;
+    margin-bottom: 0.5rem;
+    color: #3498db;
+}
+
+.footer-section p,
+.footer-section a {
+    color: #bdc3c7;
+    font-size: 0.85rem;
+    text-decoration: none;
+}
+
+.footer-section a:hover {
+    color: white;
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    font-size: 0.8rem;
+    color: #7f8c8d;
+}
+
+/* ============================
+   Contenido: secciones, títulos, texto
+   ============================ */
+section {
+    margin-bottom: 2rem;
+}
+
+section:last-of-type {
+    margin-bottom: 0;
+}
+
+h2 {
+    color: #2c3e50;
+    font-size: 1.25rem;
+    margin-bottom: 0.75rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #ecf0f1;
+}
+
+h3 {
+    color: #34495e;
+    font-size: 1.05rem;
+    margin: 1.25rem 0 0.5rem;
+}
+
+p {
+    margin-bottom: 0.75rem;
+}
+
+ul {
+    margin: 0.75rem 0 0.75rem 1.25rem;
+}
+
+li {
+    margin-bottom: 0.4rem;
+}
+
+/* ============================
+   Código y bloques pre
+   ============================ */
+code {
+    background: #f4f4f4;
+    padding: 0.15rem 0.35rem;
+    border-radius: 4px;
+    font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+    font-size: 0.85em;
+    word-break: break-word;
+}
+
+pre {
+    background: #2c3e50;
+    color: #ecf0f1;
+    padding: 0.75rem;
+    border-radius: 6px;
+    overflow-x: auto;
+    margin: 0.75rem 0;
+    font-size: 0.8rem;
+    -webkit-overflow-scrolling: touch;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    max-width: 100%;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    color: inherit;
+    word-break: normal;
+}
+
+/* ============================
+   Separadores
+   ============================ */
+hr {
+    border: none;
+    border-top: 1px solid #ecf0f1;
+    margin: 1.5rem 0;
+}
+
+/* ============================================================
+   LANDSCAPE - Pantallas en modo horizontal
+   Sidebar lateral + contenido para fácil interacción
+   ============================================================ */
+@media (orientation: landscape) and (min-width: 600px) {
+    .container {
+        grid-template-columns: 220px 1fr;
+        gap: 1.5rem;
+        padding: 1.5rem 1rem;
+    }
+
+    aside {
+        order: 1;
+        position: sticky;
+        top: 50px;
+        max-height: calc(100vh - 60px);
+        overflow-y: auto;
+        align-self: start;
+    }
+
+    main {
+        order: 2;
+        padding: 1.5rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.35rem;
+    }
+}
+
+/* ============================================================
+   TABLET - min-width 768px
+   ============================================================ */
+@media (min-width: 768px) {
+    body {
+        font-size: 1rem;
+    }
+
+    .container {
+        grid-template-columns: 250px 1fr;
+        gap: 2rem;
+        padding: 2rem 1rem;
+    }
+
+    aside {
+        position: sticky;
+        top: 70px;
+        max-height: calc(100vh - 80px);
+        overflow-y: auto;
+        align-self: start;
+    }
+
+    main {
+        padding: 2rem;
+    }
+
+    header {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+        margin-bottom: 1rem;
+    }
+
+    h3 {
+        font-size: 1.15rem;
+        margin: 1.5rem 0 0.75rem;
+    }
+
+    p {
+        margin-bottom: 1rem;
+    }
+
+    ul {
+        margin: 1rem 0 1rem 1.5rem;
+    }
+
+    li {
+        margin-bottom: 0.5rem;
+    }
+
+    section {
+        margin-bottom: 2.5rem;
+    }
+
+    pre {
+        padding: 1rem;
+        font-size: 0.9rem;
+    }
+
+    hr {
+        margin: 2rem 0;
+    }
+
+    .footer-content {
+        grid-template-columns: repeat(3, 1fr);
+        text-align: left;
+    }
+}
+
+/* ============================================================
+   DESKTOP - min-width 1024px
+   ============================================================ */
+@media (min-width: 1024px) {
+    .container {
+        grid-template-columns: 280px 1fr;
+        gap: 3rem;
+    }
+
+    main {
+        padding: 3rem;
+    }
+
+    aside {
+        top: 80px;
+        max-height: calc(100vh - 90px);
+    }
+
+    header h1 {
+        font-size: 1.75rem;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h3 {
+        font-size: 1.2rem;
+    }
+}
+
+/* ============================================================
+   Estilos de impresión
+   ============================================================ */
+@media print {
+
+    header,
+    aside,
+    footer,
+    nav,
+    .container>aside,
+    hr {
+        display: none !important;
+    }
+
+    body {
+        background: white !important;
+        color: black !important;
+        font-size: 12pt;
+        line-height: 1.5;
+        margin: 0;
+        padding: 0;
+    }
+
+    .container {
+        display: block !important;
+        max-width: none !important;
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    main {
+        padding: 0 !important;
+        margin: 0 !important;
+        background: none !important;
+        box-shadow: none !important;
+        border-radius: 0 !important;
+    }
+
+    section {
+        margin-bottom: 1.5em !important;
+        page-break-inside: avoid;
+    }
+
+    h1,
+    h2,
+    h3 {
+        color: black !important;
+        page-break-after: avoid;
+    }
+
+    h1 {
+        font-size: 24pt;
+        margin-bottom: 0.5em;
+        border-bottom: 2px solid black;
+        padding-bottom: 0.3em;
+    }
+
+    h2 {
+        font-size: 18pt;
+        margin-top: 1.5em;
+        margin-bottom: 0.5em;
+        border-bottom: 1px solid #333;
+        padding-bottom: 0.2em;
+    }
+
+    h3 {
+        font-size: 14pt;
+        margin-top: 1.2em;
+        margin-bottom: 0.4em;
+    }
+
+    p {
+        margin-bottom: 1em;
+        text-align: justify;
+        orphans: 3;
+        widows: 3;
+    }
+
+    ul,
+    ol {
+        margin: 0.5em 0 1em 2em;
+    }
+
+    li {
+        margin-bottom: 0.3em;
+    }
+
+    code {
+        background: #f0f0f0 !important;
+        color: black !important;
+        padding: 0.1em 0.3em;
+        border-radius: 3px;
+        font-family: "Courier New", Courier, monospace;
+        font-size: 10pt;
+    }
+
+    pre {
+        background: #f5f5f5 !important;
+        color: black !important;
+        border: 1px solid #ccc !important;
+        padding: 1em;
+        margin: 1em 0;
+        border-radius: 4px;
+        overflow: visible;
+        page-break-inside: avoid;
+        font-size: 9.5pt;
+        line-height: 1.4;
+    }
+
+    pre code {
+        background: none !important;
+        padding: 0;
+        font-size: inherit;
+    }
+
+    a {
+        color: black !important;
+        text-decoration: none !important;
+    }
+
+    a[href^="http"]::after {
+        content: " (" attr(href) ")";
+        font-size: 9pt;
+        color: #666;
+    }
+
+    strong {
+        font-weight: bold;
+    }
+
+    .footer-bottom {
+        display: none !important;
+    }
+}
