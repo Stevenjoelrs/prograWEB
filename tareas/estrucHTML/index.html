@@ -25,20 +25,21 @@
                     <li><a href="#entornos">3. Entornos de Desarrollo</a></li>
                     <li><a href="#tipos-datos">4. Tipos de Datos Principales</a></li>
                     <li><a href="#variables">5. Variables Dinámicas</a></li>
-                    <li><a href="#condicionales">6. Estructuras de Control</a>
+                    <li><a href="#expresiones-aritmeticas">6. Expresiones Aritméticas</a></li>
+                    <li><a href="#condicionales">7. Estructuras de Control</a>
                         <ul class="sub-item">
-                            <li><a href="#condicionales">6.1 Condicionales (if/elif/else)</a></li>
+                            <li><a href="#condicionales">7.1 Condicionales (if/elif/else)</a></li>
                         </ul>
                     </li>
-                    <li><a href="#bucles">7. Bucles (Ciclos)</a>
+                    <li><a href="#bucles">8. Bucles (Ciclos)</a>
                         <ul class="sub-item">
-                            <li><a href="#bucle-for">7.1 Bucle For</a></li>
-                            <li><a href="#bucle-while">7.2 Bucle While</a></li>
+                            <li><a href="#bucle-for">8.1 Bucle For</a></li>
+                            <li><a href="#bucle-while">8.2 Bucle While</a></li>
                         </ul>
                     </li>
-                    <li><a href="#funciones">8. Funciones</a></li>
-                    <li><a href="#errores">9. Manejo de Errores</a></li>
-                    <li><a href="#librerias">10. Importar Librerías</a></li>
+                    <li><a href="#funciones">9. Funciones</a></li>
+                    <li><a href="#errores">10. Manejo de Errores</a></li>
+                    <li><a href="#librerias">11. Importar Librerías</a></li>
                 </ul>
             </nav>
         </aside>
@@ -179,6 +180,87 @@ print(type(y))   # &lt;class 'str'&gt;
                 </code></pre>
                 <p><strong>Nota:</strong> los nombres de variables distinguen entre mayúsculas y minúsculas:
                     <code>a</code> y <code>A</code> son dos variables diferentes.</p>
+            </section>
+
+            <hr>
+
+            <section id="expresiones-aritmeticas">
+                <h2>Expresiones Aritméticas</h2>
+                <p>Los operadores aritméticos se utilizan con valores numéricos para realizar operaciones matemáticas
+                    comunes.</p>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Operador</th>
+                            <th>Nombre</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>+</code></td>
+                            <td>Suma</td>
+                            <td><code>x + y</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>-</code></td>
+                            <td>Resta</td>
+                            <td><code>x - y</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>*</code></td>
+                            <td>Multiplicación</td>
+                            <td><code>x * y</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>/</code></td>
+                            <td>División</td>
+                            <td><code>x / y</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>%</code></td>
+                            <td>Módulo (resto)</td>
+                            <td><code>x % y</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>**</code></td>
+                            <td>Potencia</td>
+                            <td><code>x ** y</code></td>
+                        </tr>
+                        <tr>
+                            <td><code>//</code></td>
+                            <td>División entera</td>
+                            <td><code>x // y</code></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p>Ejemplo usando los distintos operadores aritméticos:</p>
+                <pre><code>
+x = 15
+y = 4
+
+print(x + y)    # 19
+print(x - y)    # 11
+print(x * y)    # 60
+print(x / y)    # 3.75
+print(x % y)    # 3
+print(x ** y)   # 50625
+print(x // y)   # 3
+                </code></pre>
+
+                <h3>División en Python</h3>
+                <p>Python tiene dos operadores de división:</p>
+                <ul>
+                    <li><code>/</code> — División (siempre devuelve un <em>float</em>)</li>
+                    <li><code>//</code> — División entera (siempre devuelve un entero)</li>
+                </ul>
+                <pre><code>
+x = 12
+y = 5
+
+print(x / y)    # 2.4   (la división siempre devuelve un float)
+print(x // y)   # 2     (la división entera redondea hacia abajo)
+                </code></pre>
             </section>
 
             <hr>
