@@ -153,12 +153,32 @@ Hello, World!</code></pre>
 
             <section id="variables">
                 <h2>Variables Dinámicas</h2>
-                <p>Python tiene un sistema de <strong>tipado dinámico</strong>. El tipo de dato se asigna
-                    automáticamente al darle un valor y puede cambiar durante la ejecución.</p>
+                <p>Las variables son contenedores para almacenar valores de datos.</p>
+                <p>Python tiene un sistema de <strong>tipado dinámico</strong>: no existe un comando para declarar una
+                    variable; una variable se crea en el momento en que se le asigna un valor por primera vez, no
+                    necesita ser declarada con un tipo en particular e incluso puede cambiar de tipo después de haber
+                    sido asignada.</p>
                 <pre><code>
-mi_variable = 10          # Es un int
-mi_variable = "Hola"      # Ahora es un str
+x = 5             # x es de tipo int
+x = "Sally"       # x ahora es de tipo str
+print(x)
                 </code></pre>
+                <p>Si quieres especificar el tipo de dato de una variable, esto se puede hacer con el <em>casting</em>:
+                </p>
+                <pre><code>
+x = str(3)    # x será '3'
+y = int(3)    # y será 3
+z = float(3)  # z será 3.0
+                </code></pre>
+                <p>Puedes obtener el tipo de dato de una variable con la función <code>type()</code>:</p>
+                <pre><code>
+x = 5
+y = "John"
+print(type(x))   # &lt;class 'int'&gt;
+print(type(y))   # &lt;class 'str'&gt;
+                </code></pre>
+                <p><strong>Nota:</strong> los nombres de variables distinguen entre mayúsculas y minúsculas:
+                    <code>a</code> y <code>A</code> son dos variables diferentes.</p>
             </section>
 
             <hr>
