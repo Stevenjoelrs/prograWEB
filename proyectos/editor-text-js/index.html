@@ -9,6 +9,8 @@
         #editor {
             min-height: 300px;
             outline: none;
+            width: 50%;
+            margin: 0 auto;
         }
     </style>
 </head>
@@ -19,9 +21,13 @@
         <h2>Mi Editor de Texto</h2>
     </div>
 
-    <div class="w3-container w3-padding">
-        <div id="editor" class="w3-white w3-padding w3-border w3-round" contenteditable="true"
-            placeholder="Escribe aquí..."></div>
+    <div class="w3-container w3-section">
+        <div id="editor" class="w3-white w3-padding w3-border w3-round w3-margin-bottom" contenteditable="true"
+            placeholder="Escribe aquí..."></div>
+    </div>
+
+    <div class="w3-container w3-padding w3-center">
+        <button class="w3-button w3-orange w3-round">Borrar todo</button>
     </div>
 
     <script src="scripts.js"></script>
