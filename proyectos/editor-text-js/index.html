@@ -1,23 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-    <title>Page Title</title>
+    <meta charset="UTF-8">
+    <title>Editor de Texto</title>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <style>
+        #editor {
+            min-height: 300px;
+            outline: none;
+        }
+    </style>
 </head>
 
-<body>
-    <header>
-        <div>
-            <h1>Editor de Texto</h1>
-        </div>
-        <div>
-            <h1>By Steven y Bocho UwU</h1>
-        </div>
-    </header>
-    <section>
-        <div></div>
-    </section>
+<body class="w3-black">
 
+    <div class="w3-container w3-orange w3-center">
+        <h2>Mi Editor de Texto</h2>
+    </div>
+
+    <div class="w3-container w3-padding">
+        <div id="editor" class="w3-white w3-padding w3-border w3-round" contenteditable="true"
+            placeholder="Escribe aquí..."></div>
+    </div>
+
+    <script src="editor.js"></script>
 </body>
 
 </html>
