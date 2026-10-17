@@ -6,11 +6,91 @@
     <title>Editor de Texto</title>
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <style>
+        .workspace {
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+            padding: 16px;
+            box-sizing: border-box;
+        }
+
+        #slides-panel {
+            width: 180px;
+            flex-shrink: 0;
+            background: #333333;
+            border-radius: 6px;
+            padding: 12px;
+            box-sizing: border-box;
+            max-height: 85vh;
+            overflow-y: auto;
+        }
+
+        #slides-panel h3 {
+            color: #ff9800;
+            margin: 0 0 8px 0;
+        }
+
+        #new-slide {
+            width: 100%;
+        }
+
+        #slides-list {
+            list-style: none;
+            margin: 8px 0 0 0;
+            padding: 0;
+        }
+
+        #slides-list li {
+            margin-bottom: 10px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            border-radius: 4px;
+            padding: 2px;
+        }
+
+        #slides-list li.active {
+            border-color: #ff9800;
+        }
+
+        .slide-thumb {
+            width: 100%;
+            height: 90px;
+            overflow: hidden;
+            background: #ffffff;
+            color: #000000;
+            font-size: 10px;
+            line-height: 1.2;
+            padding: 6px;
+            box-sizing: border-box;
+            pointer-events: none;
+        }
+
+        .slide-number {
+            color: #bbbbbb;
+            font-size: 12px;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .editor-pane {
+            flex: 1;
+            min-width: 0;
+        }
+
+        #slide-counter {
+            color: #bbbbbb;
+            font-size: 14px;
+        }
+
         #editor {
             min-height: 300px;
             outline: none;
-            width: 50%;
-            margin: 0 auto;
+            background: #ffffff;
+            color: #000000;
+            margin-top: 8px;
+            padding: 16px;
+            border: 1px solid #cccccc;
+            border-radius: 6px;
         }
     </style>
 </head>
@@ -21,13 +101,20 @@
         <h2>Mi Editor de Texto</h2>
     </div>
 
-    <div class="w3-container w3-section">
-        <div id="editor" class="w3-white w3-padding w3-border w3-round w3-margin-bottom" contenteditable="true"
-            placeholder="Escribe aquí..."></div>
-    </div>
+    <div class="workspace">
+        <aside id="slides-panel">
+            <h3>Diapositivas</h3>
+            <button id="new-slide" class="w3-button w3-orange w3-round">Nueva diapositiva</button>
+            <ol id="slides-list"></ol>
+        </aside>
 
-    <div class="w3-container w3-padding w3-center">
-        <button class="w3-button w3-orange w3-round">Borrar todo</button>
+        <section class="editor-pane">
+            <span id="slide-counter">Diapositiva 1 de 1</span>
+            <div id="editor" contenteditable="true" placeholder="Escribe aquí..."></div>
+            <div class="w3-padding w3-center">
+                <button id="clear-btn" class="w3-button w3-orange w3-round">Borrar diapositiva</button>
+            </div>
+        </section>
     </div>
 
     <script src="scripts.js"></script>
