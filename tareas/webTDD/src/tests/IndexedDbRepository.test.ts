@@ -1,6 +1,6 @@
-import { IDBFactory } from 'fake-indexeddb'
+import { IDBFactory, IDBObjectStore } from 'fake-indexeddb'
 import { IndexedDbProjectRepository } from '../infrastructure/IndexedDbProjectRepository'
-import { buildProject } from './factories/projectFactory'
+import { buildContentSlide, buildProject, buildTitleSlide } from './factories/projectFactory'
 
 describe('IndexedDbProjectRepository', () => {
   let factory: IDBFactory
@@ -114,5 +114,91 @@ describe('IndexedDbProjectRepository', () => {
     await repository.saveProject(project)
 
     await expect(repository.getProject(project.id)).resolves.toEqual(project)
+  })
+
+  it('devuelve una lista vacía sin init explícito', async () => {
+    await expect(repository.listProjects()).resolves.toEqual([])
+  })
+
+  it('comparte la apertura entre inicializaciones concurrentes', async () => {
+    const open = jest.spyOn(factory, 'open')
+
+    await Promise.all([repository.init(), repository.init(), repository.init()])
+
+    expect(open).toHaveBeenCalledTimes(1)
+  })
+
+  it('conserva la portada, los tres layouts y su orden', async () => {
+    const project = buildProject({
+      slides: [
+        buildTitleSlide(),
+        buildContentSlide(),
+        buildContentSlide({ layout: 'image-only', imageUrl: 'https://example.com/slide.png', imageAlt: 'Diagrama' }),
+        buildContentSlide({ layout: 'text-and-image', imageUrl: 'https://example.com/photo.png' }),
+      ],
+    })
+
+    await repository.saveProject(project)
+    repository.close()
+
+    await expect(repository.getProject(project.id)).resolves.toEqual(project)
+  })
+
+  it('permite reintentar una apertura fallida', async () => {
+    jest.spyOn(factory, 'open').mockImplementationOnce(() => {
+      throw new DOMException('Acceso denegado', 'SecurityError')
+    })
+
+    await expect(repository.init()).rejects.toThrow('Acceso denegado')
+    await expect(repository.init()).resolves.toBeUndefined()
+  })
+
+  it('propaga el error si la base tiene una versión incompatible', async () => {
+    await new Promise<void>((resolve, reject) => {
+      const request = factory.open(databaseName, 2)
+      request.onsuccess = () => {
+        request.result.close()
+        resolve()
+      }
+      request.onerror = () => reject(request.error)
+    })
+
+    await expect(repository.init()).rejects.toMatchObject({ name: 'VersionError' })
+  })
+
+  it('rechaza una escritura abortada y conserva la versión anterior', async () => {
+    const project = buildProject()
+    await repository.saveProject(project)
+    const put = IDBObjectStore.prototype.put
+    jest.spyOn(IDBObjectStore.prototype, 'put').mockImplementationOnce(function (value) {
+      const request = put.call(this, value)
+      request.onsuccess = () => this.transaction.abort()
+      return request
+    })
+
+    await expect(repository.saveProject({ ...project, name: 'No guardado' })).rejects.toThrow()
+    await expect(repository.getProject(project.id)).resolves.toEqual(project)
+  })
+
+  it('rechaza datos no serializables sin sobrescribir el proyecto', async () => {
+    const project = buildProject()
+    await repository.saveProject(project)
+    const invalid = { ...project, callback: () => undefined }
+
+    await expect(repository.saveProject(invalid)).rejects.toMatchObject({ name: 'DataCloneError' })
+    await expect(repository.getProject(project.id)).resolves.toEqual(project)
+  })
+
+  it('libera la conexión cuando otra instancia actualiza la base', async () => {
+    await repository.init()
+
+    await new Promise<void>((resolve, reject) => {
+      const request = factory.open(databaseName, 2)
+      request.onsuccess = () => {
+        request.result.close()
+        resolve()
+      }
+      request.onerror = () => reject(request.error)
+    })
   })
 })

@@ -183,4 +183,147 @@ describe('useProjectController', () => {
     expect(result.current.projects).toEqual([])
     expect(result.current.error).toBe('No se pudo leer IndexedDB')
   })
+
+  it('expone el error de inicialización sin intentar leer proyectos', async () => {
+    const repository = new InMemoryProjectRepository()
+    jest.spyOn(repository, 'init').mockRejectedValue(new Error('Almacenamiento no disponible'))
+    const list = jest.spyOn(repository, 'listProjects')
+
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+    expect(result.current.error).toBe('Almacenamiento no disponible')
+    expect(list).not.toHaveBeenCalled()
+  })
+
+  it('no agrega proyectos cuando falla el guardado y permite reintentar', async () => {
+    const repository = new InMemoryProjectRepository()
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    repository.saveError = new Error('Sin espacio disponible')
+
+    await act(async () => {
+      await expect(result.current.createProject({ name: 'Nuevo', author: '', topic: '' }))
+        .rejects.toThrow('Sin espacio disponible')
+    })
+
+    expect(result.current.projects).toEqual([])
+    expect(result.current.activeProject).toBeNull()
+    expect(result.current.error).toBe('Sin espacio disponible')
+
+    repository.saveError = null
+    await act(async () => {
+      await result.current.createProject({ name: 'Nuevo', author: '', topic: '' })
+    })
+
+    expect(result.current.projects).toHaveLength(1)
+    expect(result.current.error).toBeNull()
+  })
+
+  it('conserva el proyecto activo cuando falla una actualización', async () => {
+    const repository = new InMemoryProjectRepository()
+    const project = buildProject()
+    repository.seed(project)
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    act(() => result.current.selectProject(project.id))
+    repository.saveError = new Error('No se pudo guardar')
+
+    await act(async () => {
+      await expect(result.current.updateProject({ ...project, name: 'Cambio' }))
+        .rejects.toThrow('No se pudo guardar')
+    })
+
+    expect(result.current.projects).toEqual([project])
+    expect(result.current.activeProject).toEqual(project)
+    expect(result.current.error).toBe('No se pudo guardar')
+  })
+
+  it('rechaza renombrar un proyecto con un nombre vacío', async () => {
+    const repository = new InMemoryProjectRepository()
+    const project = buildProject()
+    repository.seed(project)
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+    await act(async () => {
+      await expect(result.current.updateProject({ ...project, name: '  ' }))
+        .rejects.toThrow('El nombre del proyecto es obligatorio')
+    })
+
+    expect(repository.savedProjects).toHaveLength(0)
+    expect(result.current.projects).toEqual([project])
+  })
+
+  it('conserva el proyecto y la selección si falla la eliminación', async () => {
+    const repository = new InMemoryProjectRepository()
+    const project = buildProject()
+    repository.seed(project)
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    act(() => result.current.selectProject(project.id))
+    jest.spyOn(repository, 'deleteProject').mockRejectedValue(new Error('No se pudo eliminar'))
+
+    await act(async () => {
+      await expect(result.current.deleteProject(project.id)).rejects.toThrow('No se pudo eliminar')
+    })
+
+    expect(result.current.projects).toEqual([project])
+    expect(result.current.activeProject).toEqual(project)
+    expect(result.current.error).toBe('No se pudo eliminar')
+  })
+
+  it('mantiene la selección al eliminar otro proyecto', async () => {
+    const repository = new InMemoryProjectRepository()
+    const active = buildProject()
+    const other = buildProject()
+    repository.seed(active, other)
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    act(() => result.current.selectProject(active.id))
+
+    await act(async () => { await result.current.deleteProject(other.id) })
+
+    expect(result.current.activeProject).toEqual(active)
+    expect(result.current.projects).toEqual([active])
+  })
+
+  it('conserva ambas creaciones concurrentes con identificadores únicos', async () => {
+    const repository = new InMemoryProjectRepository()
+    const { result } = renderHook(() => useProjectController(repository))
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+
+    await act(async () => {
+      await Promise.all([
+        result.current.createProject({ name: 'Primero', author: '', topic: '' }),
+        result.current.createProject({ name: 'Segundo', author: '', topic: '' }),
+      ])
+    })
+
+    expect(result.current.projects).toHaveLength(2)
+    const ids = result.current.projects.flatMap(project => [project.id, project.slides[0].id])
+    expect(new Set(ids).size).toBe(4)
+  })
+
+  it('ignora una carga pendiente del repositorio anterior', async () => {
+    const previous = new InMemoryProjectRepository()
+    let finishPrevious!: (projects: Project[]) => void
+    const list = jest.spyOn(previous, 'listProjects').mockReturnValue(new Promise(resolve => {
+      finishPrevious = resolve
+    }))
+    const current = new InMemoryProjectRepository()
+    const project = buildProject()
+    current.seed(project)
+    const { result, rerender } = renderHook(repository => useProjectController(repository), {
+      initialProps: previous,
+    })
+    await waitFor(() => expect(list).toHaveBeenCalled())
+
+    rerender(current)
+    await waitFor(() => expect(result.current.projects).toEqual([project]))
+    await act(async () => { finishPrevious([buildProject()]) })
+
+    expect(result.current.projects).toEqual([project])
+    expect(result.current.error).toBeNull()
+  })
 })

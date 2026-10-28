@@ -1,6 +1,6 @@
 /** @type {import('jest').Config} */
 module.exports = {
-  testEnvironment: 'jsdom',
+  testEnvironment: '<rootDir>/src/tests/IndexedDbEnvironment.cjs',
   roots: ['<rootDir>/src'],
   testMatch: ['<rootDir>/src/**/*.test.(ts|tsx)'],
   setupFilesAfterEnv: ['<rootDir>/src/tests/setupTests.ts'],
