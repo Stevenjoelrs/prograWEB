@@ -170,7 +170,7 @@ describe('IndexedDbProjectRepository', () => {
     const project = buildProject()
     await repository.saveProject(project)
     const put = IDBObjectStore.prototype.put
-    jest.spyOn(IDBObjectStore.prototype, 'put').mockImplementationOnce(function (value) {
+    jest.spyOn(IDBObjectStore.prototype, 'put').mockImplementationOnce(function (this: IDBObjectStore, value) {
       const request = put.call(this, value)
       request.onsuccess = () => this.transaction.abort()
       return request

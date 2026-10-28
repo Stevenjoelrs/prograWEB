@@ -50,6 +50,23 @@ arquitectura de microservicios REST sin modificar los controladores ni la vista.
 ## Estado del proyecto
 
 - [x] Fase 1: setup, arquitectura base y modelos
-- [ ] Fase 2: TDD, IndexedDB y controladores
+- [x] Fase 2: TDD, IndexedDB y controlador de proyectos
 - [ ] Fase 3: componentes UI, layouts y modos edición/presentación
 - [ ] Fase 4: exportación HTML/PDF, suite completa y publicación
+
+## Fase 2
+
+`IndexedDbProjectRepository` implementa el puerto existente, abre la base al
+necesitarla y confirma los guardados al completar la transacción. Su método
+`close()` libera la conexión; también la libera ante cambios de versión.
+
+`useProjectController(repository)` recibe una instancia estable del repositorio.
+Expone proyectos ordenados por última actualización, selección, carga y errores,
+además de creación con portada, actualización y eliminación. Las operaciones
+fallidas rechazan su promesa y conservan el estado anterior.
+
+Las pruebas se ejecutaron primero en rojo y luego en verde por módulo. Cubren
+el contrato con un repositorio en memoria, IndexedDB con `fake-indexeddb` y
+la integración de ambos módulos bajo `StrictMode`, incluida la reapertura.
+La conexión con la interfaz y `useSlideController` quedan para las fases de UI
+y gestión de diapositivas.

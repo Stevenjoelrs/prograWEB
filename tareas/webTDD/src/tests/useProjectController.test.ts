@@ -326,4 +326,30 @@ describe('useProjectController', () => {
     expect(result.current.projects).toEqual([project])
     expect(result.current.error).toBeNull()
   })
+
+  it('indica carga y oculta el estado anterior al cambiar de repositorio', async () => {
+    const previous = new InMemoryProjectRepository()
+    const oldProject = buildProject()
+    previous.seed(oldProject)
+    const current = new InMemoryProjectRepository()
+    let finishLoading!: (projects: Project[]) => void
+    jest.spyOn(current, 'listProjects').mockReturnValue(new Promise(resolve => {
+      finishLoading = resolve
+    }))
+    const { result, rerender } = renderHook(repository => useProjectController(repository), {
+      initialProps: previous,
+    })
+    await waitFor(() => expect(result.current.isLoading).toBe(false))
+    act(() => result.current.selectProject(oldProject.id))
+
+    rerender(current)
+    expect(result.current.isLoading).toBe(true)
+    expect(result.current.projects).toEqual([])
+    expect(result.current.activeProject).toBeNull()
+    const project = buildProject()
+    await act(async () => { finishLoading([project]) })
+
+    expect(result.current.isLoading).toBe(false)
+    expect(result.current.projects).toEqual([project])
+  })
 })
