@@ -34,15 +34,15 @@ describe('Button', () => {
     render(<Button label="Primario" onClick={jest.fn()} />)
 
     const button = screen.getByRole('button', { name: 'Primario' })
-    expect(button.className).toContain('bg-blue-600')
+    expect(button.className).toContain('bg-red-600')
     expect(button.className).toContain('px-6 py-3')
     expect(button.className).toContain('text-lg')
   })
 
   it.each([
-    ['primary', 'bg-blue-600'],
-    ['secondary', 'bg-gray-200'],
-    ['danger', 'bg-red-600'],
+    ['primary', 'bg-red-600'],
+    ['secondary', 'bg-black'],
+    ['danger', 'text-red-400'],
   ] as const)('aplica las clases de la variante %s', (variant, expected) => {
     render(<Button label={variant} onClick={jest.fn()} variant={variant} />)
 
@@ -74,5 +74,20 @@ describe('Button', () => {
     render(<Button label="Deshabilitado" onClick={jest.fn()} disabled />)
 
     expect(screen.getByRole('button', { name: 'Deshabilitado' })).toBeDisabled()
+  })
+
+  it.each(['primary', 'secondary', 'danger'] as const)('ofrece área táctil y evita hover en %s', variant => {
+    render(<Button label="Acción" variant={variant} />)
+    const button = screen.getByRole('button', { name: 'Acción' })
+    expect(button).toHaveAttribute('type', 'button')
+    expect(button.className).toContain('min-h-11')
+    expect(button.className).not.toContain('hover:')
+  })
+
+  it('permite usar un botón submit sin onClick', async () => {
+    const submit = jest.fn(event => event.preventDefault())
+    render(<form onSubmit={submit}><Button label="Guardar formulario" type="submit" /></form>)
+    await userEvent.click(screen.getByRole('button', { name: 'Guardar formulario' }))
+    expect(submit).toHaveBeenCalledTimes(1)
   })
 })
