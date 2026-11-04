@@ -1,3 +1,7 @@
+# Integrantes
+- Steven Joel Ramos Salazar
+- Jhosua Alejandro Bustillos Calderon
+
 # webTDD · Editor de presentaciones
 
 Aplicación web cliente para crear, editar, organizar y presentar diapositivas.
