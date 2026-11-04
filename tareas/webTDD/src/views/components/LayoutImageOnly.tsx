@@ -29,7 +29,7 @@ export default function LayoutImageOnly(
                 alt={imageAlt}
                 className="mt-4 min-h-0 w-full flex-1 object-contain" />
             ) : (
-                <p className="mt-4 text-sm text-slate-400">Sin imagen</p>
+                <p className="mt-4 text-sm text-neutral-400">Sin imagen</p>
             )}
         </div>
     );

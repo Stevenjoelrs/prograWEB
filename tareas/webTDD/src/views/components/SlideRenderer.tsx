@@ -35,7 +35,7 @@ export default function SlideRenderer(
             className={`flex min-h-0 w-full flex-1 flex-col items-center justify-center gap-4 px-8 text-center ${className}`}>
                 <h1 className="text-4xl font-semibold tracking-tight">{slide.title}</h1>
                 {slide.subtitle?.trim() && (
-                    <p className="text-lg text-slate-600">{slide.subtitle}</p>
+                    <p className="text-lg text-neutral-600">{slide.subtitle}</p>
                 )}
             </div>
         );
@@ -57,10 +57,10 @@ export default function SlideRenderer(
 function renderLayout(slide: ContentSlide){
     switch(slide.layout){
         case 'image-only':
-            return <LayoutImageOnly slide={slide} />;
+            return <LayoutImageOnly slide={slide} className="overflow-y-auto px-8" />;
         case 'text-and-image':
-            return <LayoutTextAndImage slide={slide} />;
+            return <LayoutTextAndImage slide={slide} className="overflow-y-auto px-8" />;
         default:
-            return <LayoutTextOnly slide={slide} />;
+            return <LayoutTextOnly slide={slide} className="overflow-y-auto px-8" />;
     }
 }

@@ -27,11 +27,11 @@ export default function LayoutTextAndImage(
             <div className="mt-4 flex min-h-0 w-full flex-1 flex-col gap-6 md:flex-row">
                 <div className="flex min-h-0 flex-1 flex-col">
                     {body ? (
-                        <p className="whitespace-pre-line leading-relaxed text-slate-700">
+                        <p className="whitespace-pre-line leading-relaxed text-neutral-700">
                             {slide.body}
                         </p>
                     ) : (
-                        <p className="text-sm text-slate-400">Sin contenido</p>
+                        <p className="text-sm text-neutral-400">Sin contenido</p>
                     )}
                 </div>
                 <div className="flex min-h-0 flex-1 items-center justify-center">
@@ -41,7 +41,7 @@ export default function LayoutTextAndImage(
                         alt={imageAlt}
                         className="max-h-full w-full object-contain" />
                     ) : (
-                        <p className="text-sm text-slate-400">Sin imagen</p>
+                        <p className="text-sm text-neutral-400">Sin imagen</p>
                     )}
                 </div>
             </div>

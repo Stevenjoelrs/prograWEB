@@ -1,25 +1,83 @@
 @import 'tailwindcss';
 
 @theme {
-  --font-sans:
-    'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-sans: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
 
 @layer base {
-  html {
-    -webkit-text-size-adjust: 100%;
-  }
-
+  html { -webkit-text-size-adjust: 100%; }
   body {
     margin: 0;
     min-width: 48rem;
     min-height: 100dvh;
-    background-color: var(--color-slate-100);
-    color: var(--color-slate-900);
+    background: #000;
+    color: #fff;
     font-family: var(--font-sans);
   }
+  #root { min-height: 100dvh; }
+  button, input, select, textarea { font: inherit; }
+  button { cursor: pointer; touch-action: manipulation; }
+  button:disabled { cursor: default; }
+  input, select, textarea { border-radius: 0; }
+  ::selection { background: #dc2626; color: #fff; }
+}
 
-  #root {
-    min-height: 100dvh;
-  }
+.app-shell { display: grid; grid-template-columns: 208px minmax(0, 1fr); grid-template-rows: 80px 1fr; min-height: 100dvh; }
+.topbar { grid-column: 1 / -1; display: flex; align-items: center; justify-content: space-between; gap: 24px; padding: 16px 24px; border-bottom: 1px solid #303030; }
+.wordmark { display: flex; align-items: center; font-size: 17px; font-weight: 750; letter-spacing: -0.6px; }
+.brand-mark { width: 14px; height: 20px; background: #dc2626; margin-right: 10px; }
+.brand-dot { color: #ef4444; }
+.topbar-actions, .button-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+.local-note, .sidebar-note, .project-info, .intro { color: #aaa; font-size: 14px; line-height: 1.6; }
+.local-note { display: none; }
+.sidebar { display: flex; flex-direction: column; gap: 24px; padding: 28px 16px; border-right: 1px solid #303030; }
+.eyebrow { display: flex; align-items: center; justify-content: space-between; margin: 0 0 12px; color: #aaa; text-transform: uppercase; letter-spacing: 1.4px; font-size: 11px; font-weight: 600; }
+.eyebrow span { color: #ef4444; }
+.project-list { display: flex; flex-direction: column; gap: 8px; }
+.project-list button { width: 100%; text-align: left; overflow-wrap: anywhere; }
+button[aria-pressed='true'] { border-color: #ef4444; border-left-width: 4px; }
+.sidebar-note { margin-top: auto; padding-top: 40px; font-size: 12px; }
+.workspace { min-width: 0; width: 100%; max-width: 1360px; padding: 28px 24px 40px; }
+.section-heading h1, .empty-state h1, .new-project h1 { margin: 0; font-size: clamp(24px, 2.5vw, 34px); font-weight: 600; line-height: 1.2; letter-spacing: -0.8px; overflow-wrap: anywhere; }
+.section-heading { display: flex; align-items: flex-start; justify-content: space-between; gap: 24px; margin-bottom: 24px; }
+.project-info { margin-top: 8px; overflow-wrap: anywhere; }
+.slide-count { flex: none; padding-top: 4px; color: #aaa; font-size: 12px; }
+.slide-strip { display: flex; gap: 8px; overflow-x: auto; padding: 0 0 16px; margin-bottom: 12px; }
+.slide-strip button { flex: none; max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.canvas-caption { display: flex; justify-content: space-between; margin-bottom: 10px; color: #aaa; font-size: 12px; }
+.slide-canvas { display: flex; aspect-ratio: 16 / 9; width: 100%; overflow: auto; background: #fff; color: #111; }
+.slide-canvas > div, .presentation-canvas > div { flex: 1; }
+.slide-form { margin-top: 28px; }
+.form-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.field { display: flex; flex-direction: column; gap: 8px; min-width: 0; font-size: 13px; }
+.field input, .field select, .field textarea { width: 100%; min-height: 44px; padding: 10px 12px; border: 1px solid #fff; background: #fff; color: #111; font-size: 16px; line-height: 1.5; }
+.field textarea { resize: vertical; }
+.field input:focus-visible, .field select:focus-visible, .field textarea:focus-visible { outline: 2px solid #ef4444; outline-offset: 3px; }
+.wide { grid-column: 1 / -1; }
+.form-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin-top: 20px; }
+.form-actions p { color: #aaa; font-size: 12px; }
+.project-footer { display: flex; justify-content: flex-end; border-top: 1px solid #303030; margin-top: 32px; padding-top: 20px; }
+.new-project { max-width: 760px; padding-top: 24px; }
+.intro { margin: 16px 0 28px; }
+.empty-state { padding-top: 24px; }
+.empty-sheet { display: flex; flex-direction: column; justify-content: space-between; min-height: 320px; aspect-ratio: 16 / 9; max-width: 960px; margin-top: 40px; padding: 32px; color: #111; background: #fff; }
+.empty-sheet > span { font-size: 11px; letter-spacing: 1px; }
+.empty-sheet p { font-size: clamp(28px, 4vw, 48px); line-height: 1.1; font-weight: 600; letter-spacing: -1.5px; }
+.error-message { border-left: 3px solid #ef4444; padding: 12px 16px; margin-bottom: 24px; color: #fca5a5; background: #1c0808; }
+.skip-link { position: absolute; left: 16px; top: -100px; padding: 12px; z-index: 10; background: #fff; color: #000; }
+.skip-link:focus { top: 16px; }
+.presentation { display: flex; flex-direction: column; min-height: 100dvh; padding: 16px 24px; background: #000; }
+.presentation-bar { display: flex; align-items: center; justify-content: space-between; gap: 24px; padding-bottom: 16px; }
+.presentation-bar p { overflow-wrap: anywhere; }
+.presentation-stage { flex: 1; display: flex; align-items: center; justify-content: center; padding: 16px 0; }
+.presentation-canvas { display: flex; width: min(100%, calc((100dvh - 180px) * 16 / 9)); aspect-ratio: 16 / 9; background: #fff; color: #111; overflow: auto; }
+.presentation-controls { display: flex; align-items: center; justify-content: center; gap: 32px; padding: 12px 0; }
+.presentation-controls p { min-width: 72px; text-align: center; font-variant-numeric: tabular-nums; }
+.presentation-notice { color: #aaa; font-size: 13px; }
+
+@media (min-width: 1100px) {
+  .app-shell { grid-template-columns: 240px minmax(0, 1fr); }
+  .workspace { padding: 32px 40px 48px; }
+  .sidebar { padding: 32px 24px; }
+  .local-note { display: inline; }
 }

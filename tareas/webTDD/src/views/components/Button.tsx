@@ -2,9 +2,9 @@ type Variant = 'primary' | 'secondary' | 'danger'
 type Size = 'sm' | 'md' | 'lg'
 
 const variantClasses: Record<Variant, string> = {
-  primary: 'bg-blue-600 text-white hover:bg-blue-700',
-  secondary: 'bg-gray-200 text-gray-900 hover:bg-gray-300',
-  danger: 'bg-red-600 text-white hover:bg-red-700',
+  primary: 'bg-red-600 text-white',
+  secondary: 'border border-neutral-700 bg-black text-white',
+  danger: 'border border-red-500 bg-black text-red-400',
 }
 
 const sizeClasses: Record<Size, string> = {
@@ -15,7 +15,6 @@ const sizeClasses: Record<Size, string> = {
 
 interface ButtonProps extends React.ComponentProps<'button'>{
     label: string;
-    onClick: () => void;
     variant?: Variant
     size?: Size
 
@@ -27,13 +26,15 @@ export default function Button(
         onClick,
         variant = "primary",
         size = "lg",
+        type = 'button',
         className = '',
         ...props
     }:ButtonProps){
     return(
         <button 
         {...props}
-        className={`rounded font-medium ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
+        type={type}
+        className={`min-h-11 rounded-none font-medium focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-red-500 disabled:opacity-40 ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
         onClick={onClick}>
             {label}
         </button>
