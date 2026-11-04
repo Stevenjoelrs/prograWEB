@@ -55,7 +55,8 @@ arquitectura de microservicios REST sin modificar los controladores ni la vista.
 
 - [x] Fase 1: setup, arquitectura base y modelos
 - [x] Fase 2: TDD, IndexedDB y controlador de proyectos
-- [ ] Fase 3: componentes UI, layouts y modos edición/presentación
+- [x] Fase 3: componentes UI, layouts y modos edición/presentación
+- [ ] HU-04: copiar y mover diapositivas entre proyectos
 - [ ] Fase 4: exportación HTML/PDF, suite completa y publicación
 
 ## Fase 2
@@ -72,5 +73,23 @@ fallidas rechazan su promesa y conservan el estado anterior.
 Las pruebas se ejecutaron primero en rojo y luego en verde por módulo. Cubren
 el contrato con un repositorio en memoria, IndexedDB con `fake-indexeddb` y
 la integración de ambos módulos bajo `StrictMode`, incluida la reapertura.
-La conexión con la interfaz y `useSlideController` quedan para las fases de UI
-y gestión de diapositivas.
+
+## Fase 3
+
+La página conecta `useProjectController` e IndexedDB con la biblioteca de
+proyectos, su creación y eliminación. `useSlideController` permite agregar,
+seleccionar, editar y eliminar diapositivas; la portada se conserva siempre.
+
+El editor y el modo de presentación reutilizan `Button`, `SlideRenderer`,
+`HeaderFooter` y los tres layouts existentes. El diseño parte de tablet
+(768 px): negro predominante, superficies blancas y acentos rojos, sin hover,
+sombras, degradados ni animaciones. Los botones tienen un alto mínimo de 44 px.
+
+La vista previa refleja el borrador. **Guardar cambios** persiste la edición;
+si falla, el formulario conserva el contenido y permite reintentar. Se pide
+confirmación antes de abandonar cambios o eliminar datos.
+
+**Presentar** solicita pantalla completa cuando el navegador lo permite.
+Se navega con botones táctiles o flechas izquierda/derecha y se sale con
+Escape o **Salir de presentación**. Las imágenes se referencian mediante URL
+HTTP/HTTPS; las imágenes remotas requieren conexión para cargarse.

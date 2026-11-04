@@ -5,10 +5,27 @@ import { InMemoryProjectRepository } from './fakes/InMemoryProjectRepository'
 import { buildContentSlide, buildProject } from './factories/projectFactory'
 
 async function openProject(name: string) {
-  await userEvent.click(await screen.findByRole('button', { name, exact: true }))
+  await userEvent.click(await screen.findByRole('button', { name }))
 }
 
 describe('editor de presentaciones', () => {
+  it('protege también los datos de una presentación todavía no creada', async () => {
+    const repository = new InMemoryProjectRepository()
+    const confirm = jest.spyOn(window, 'confirm').mockReturnValue(false)
+    const user = userEvent.setup()
+    render(<App repository={repository} />)
+    await user.click(await screen.findByRole('button', { name: 'Nuevo proyecto' }))
+    await user.type(screen.getByLabelText('Nombre del proyecto'), 'Borrador nuevo')
+    await user.click(screen.getByRole('button', { name: 'Cancelar' }))
+    expect(confirm).toHaveBeenCalled()
+    expect(screen.getByLabelText('Nombre del proyecto')).toHaveValue('Borrador nuevo')
+    confirm.mockReturnValue(true)
+    await user.click(screen.getByRole('button', { name: 'Cancelar' }))
+    const beforeUnload = new Event('beforeunload', { cancelable: true })
+    window.dispatchEvent(beforeUnload)
+    expect(beforeUnload.defaultPrevented).toBe(false)
+  })
+
   it('crea un proyecto, edita una diapositiva y recupera su contenido al reabrir', async () => {
     const repository = new InMemoryProjectRepository()
     const user = userEvent.setup()
