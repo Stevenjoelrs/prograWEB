@@ -27,10 +27,12 @@ export default function Button(
         onClick,
         variant = "primary",
         size = "lg",
-        className = ''
+        className = '',
+        ...props
     }:ButtonProps){
     return(
         <button 
+        {...props}
         className={`rounded font-medium ${variantClasses[variant]} ${sizeClasses[size]} ${className}`}
         onClick={onClick}>
             {label}
